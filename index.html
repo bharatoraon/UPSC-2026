@@ -210,16 +210,18 @@
                     <div id="phase-details-container" class="bg-slate-100 p-6 rounded-lg min-h-[150px]"></div>
                 </div>
                 <div>
-                    <h3 class="text-2xl font-bold text-slate-800 mb-4">Day-Wise Action Plan (July 2025 Onwards)</h3>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">Day-Wise Action Plan (July 2024 Onwards)</h3>
                     <div class="border-b border-slate-200">
                         <nav class="-mb-px flex space-x-4 overflow-x-auto" aria-label="Tabs">
-                            <button onclick="showSchedule('consolidation')" class="schedule-tab tab-active whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">Phase 2: Consolidation</button>
+                            <button onclick="showSchedule('foundation')" class="schedule-tab tab-active whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">Phase 1: Foundation</button>
+                            <button onclick="showSchedule('consolidation')" class="schedule-tab tab-inactive whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">Phase 2: Consolidation</button>
                             <button onclick="showSchedule('prelims')" class="schedule-tab tab-inactive whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">Phase 3: Prelims</button>
                             <button onclick="showSchedule('mains')" class="schedule-tab tab-inactive whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">Phase 4: Mains</button>
                         </nav>
                     </div>
                     <div class="mt-6">
-                        <div id="schedule-consolidation" class="schedule-content active"></div>
+                        <div id="schedule-foundation" class="schedule-content active"></div>
+                        <div id="schedule-consolidation" class="schedule-content hidden"></div>
                         <div id="schedule-prelims" class="schedule-content hidden"></div>
                         <div id="schedule-mains" class="schedule-content hidden"></div>
                     </div>
@@ -464,6 +466,12 @@ function showPhaseDetails(phaseNumber) {
 }
 
 const scheduleData = {
+    foundation: [
+        { month: 'Jul - Sep 2024', focus: 'NCERTs (History, Geo) & Optional Finalization', tasks: 'Read History & Geography NCERTs (Class 6-12). Develop newspaper reading habit. Research and finalize optional subject by September end.' },
+        { month: 'Oct - Dec 2024', focus: 'NCERTs (Polity, Eco) & Optional Start', tasks: 'Read Polity & Economy NCERTs. Begin studying Optional Subject Paper 1 systematically. Continue newspaper reading.' },
+        { month: 'Jan - Mar 2025', focus: 'GS Standard Books & Optional Paper 1', tasks: 'Start standard books for Polity (Laxmikanth) & Modern History (Spectrum). Aim to finish Optional Paper 1. Make concise notes.' },
+        { month: 'Apr - Jun 2025', focus: 'Optional Paper 2 & GS Consolidation', tasks: 'Start Optional Subject Paper 2. Revise completed GS subjects. Begin light answer writing practice (1 question/day).' }
+    ],
     consolidation: [
         { month: 'July (Last Week)', focus: 'Indian Polity (GS-II)', tasks: 'Settle into the daily routine. Start reading M. Laxmikanth. Continue Optional Subject study. Write 1-2 answers daily.' },
         { month: 'August', focus: 'Indian Polity (GS-II)', tasks: 'Finish M. Laxmikanth. Continue Optional Subject. Increase answer writing to 2-3 questions daily. Weekly revision every Sunday.' },
@@ -569,10 +577,11 @@ window.onload = function() {
 
     // Master Plan section
     showPhaseDetails(1);
+    document.getElementById('schedule-foundation').innerHTML = generateScheduleHTML(scheduleData.foundation);
     document.getElementById('schedule-consolidation').innerHTML = generateScheduleHTML(scheduleData.consolidation);
     document.getElementById('schedule-prelims').innerHTML = generateScheduleHTML(scheduleData.prelims);
     document.getElementById('schedule-mains').innerHTML = generateScheduleHTML(scheduleData.mains);
-    showSchedule('consolidation');
+    showSchedule('foundation');
 
     // Strategy section
     renderOptionalChart();
