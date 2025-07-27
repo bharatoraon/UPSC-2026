@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project IAS 2026: The Complete Strategy Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Teko:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: This application has been expanded into a full, multi-section website simulated within a single page. The structure is based on the detailed "Project IAS 2026" report, organizing the vast content into logical, navigable sections: Home, The Exam, The Master Plan, Resources, Strategy & Skills, and Mindset. A persistent top navigation bar allows users to jump to any section instantly, making it function like a multi-page site. This architecture was chosen to present the comprehensive information in a structured, non-overwhelming manner, allowing aspirants to deep-dive into specific areas of preparation as needed, while retaining the fluid, interactive experience of a single-page application. -->
+    <!-- Visualization & Content Choices: All interactive elements from the initial dashboard have been retained and placed within their relevant new content sections. For example, the Eligibility Checker is now part of 'The Exam' section alongside detailed text on the exam structure. The Optional Subject chart is in 'Strategy & Skills'. This integration of interactive tools with detailed textual explanations from the report provides context and enhances learning. The extensive text from the report has been formatted into readable cards, tables, and lists to improve scannability and user experience. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .font-teko { font-family: 'Teko', sans-serif; }
+        .nav-link-active { color: #2563eb; font-weight: 600; }
+        .page-section { display: none; }
+        .page-section.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .tab-active { border-color: #2563eb; color: #2563eb; background-color: #dbeafe; }
+        .tab-inactive { border-color: transparent; color: #4b5563; }
+        .phase-card-active { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); border-color: #2563eb; }
+        .chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; }
+        th { background-color: #f1f5f9; font-weight: 600; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-teko text-3xl font-semibold text-slate-900 tracking-wide">PROJECT IAS 2026</span>
+                </div>
+                <div class="hidden md:block">
+                    <div id="main-nav" class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" onclick="showPage('home', this)" class="nav-link nav-link-active px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#exam" onclick="showPage('exam', this)" class="nav-link text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">The Exam</a>
+                        <a href="#plan" onclick="showPage('plan', this)" class="nav-link text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">The Master Plan</a>
+                        <a href="#resources" onclick="showPage('resources', this)" class="nav-link text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Resources</a>
+                        <a href="#strategy" onclick="showPage('strategy', this)" class="nav-link text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Strategy & Skills</a>
+                        <a href="#mindset" onclick="showPage('mindset', this)" class="nav-link text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Mindset</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <section id="home" class="page-section active">
+            <div class="text-center">
+                <h1 class="font-teko text-5xl md:text-7xl font-bold text-slate-900 uppercase tracking-wider">Your Journey to IAS Begins Now</h1>
+                <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">A complete, interactive blueprint for the UPSC CSE 2026 challenge. Navigate through the sections to build your winning strategy.</p>
+                
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                        <h3 class="font-semibold text-slate-500">Prelims 2026 Countdown</h3>
+                        <p id="prelims-countdown" class="font-teko text-5xl text-blue-600 mt-2">--d --h --m --s</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-blue-500 transform scale-105">
+                        <h3 class="font-semibold text-slate-500">Qualification Rate (2023)</h3>
+                        <p class="font-teko text-7xl text-blue-600 mt-1">0.078%</p>
+                        <p class="text-xs text-slate-500">A test of elimination. Strategy is key.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                        <h3 class="font-semibold text-slate-500">Mains 2026 Countdown</h3>
+                        <p id="mains-countdown" class="font-teko text-5xl text-blue-600 mt-2">--d --h --m --s</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="exam" class="page-section">
+            <div class="text-center mb-12">
+                <h2 class="font-teko text-4xl md:text-5xl font-bold text-slate-900 uppercase">Anatomy of the Examination</h2>
+                <p class="mt-2 text-lg text-slate-600 max-w-3xl mx-auto">Understand the structure, eligibility, and syllabus. A clear grasp of the framework is the first step to success.</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8 border border-slate-200 space-y-12">
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">The Three-Stage Gauntlet</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                         <div class="space-y-4">
+                            <div id="stage-prelims" class="stage-gate p-4 border-2 border-slate-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all" onclick="toggleStageDetails('prelims')">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="font-bold text-lg">Stage 1: Preliminary Exam</h4>
+                                    <span class="text-sm font-semibold text-red-600">Qualifying</span>
+                                </div>
+                                <div id="details-prelims" class="stage-details hidden mt-4 text-sm text-slate-600 space-y-3">
+                                    <p><strong>Type:</strong> Objective (MCQ) | <strong>Total Marks:</strong> 400</p>
+                                    <div class="p-3 bg-slate-100 rounded-md">
+                                        <p><strong>GS Paper I:</strong> 100 Qs, 200 Marks. Score determines Mains qualification. Penalty: -0.66 marks.</p>
+                                    </div>
+                                    <div class="p-3 bg-slate-100 rounded-md">
+                                        <p><strong>GS Paper II (CSAT):</strong> 80 Qs, 200 Marks. Must score 33% (66 marks) to qualify. Penalty: -0.83 marks.</p>
+                                    </div>
+                                    <p class="font-semibold text-red-700 mt-2">Critical Note: Failure in CSAT means disqualification, regardless of GS-I score. Do not neglect it.</p>
+                                </div>
+                            </div>
+                            <div id="stage-mains" class="stage-gate p-4 border-2 border-slate-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all" onclick="toggleStageDetails('mains')">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="font-bold text-lg">Stage 2: Main Exam</h4>
+                                    <span class="text-sm font-semibold text-green-600">Merit Ranking</span>
+                                </div>
+                                <div id="details-mains" class="stage-details hidden mt-4 text-sm text-slate-600 space-y-3">
+                                    <p><strong>Type:</strong> Descriptive (Essay) | <strong>Total Marks:</strong> 1750</p>
+                                    <div class="p-3 bg-slate-100 rounded-md">
+                                        <p><strong>Qualifying Papers:</strong> English & Compulsory Indian Language (25% needed in each).</p>
+                                    </div>
+                                    <div class="p-3 bg-slate-100 rounded-md">
+                                        <p><strong>Merit Papers (250 Marks each):</strong> Essay, GS I, GS II, GS III, GS IV, Optional Paper 1, Optional Paper 2.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="stage-interview" class="stage-gate p-4 border-2 border-slate-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all" onclick="toggleStageDetails('interview')">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="font-bold text-lg">Stage 3: Personality Test</h4>
+                                    <span class="text-sm font-semibold text-green-600">Merit Ranking</span>
+                                </div>
+                                <div id="details-interview" class="stage-details hidden mt-4 text-sm text-slate-600 space-y-3">
+                                    <p><strong>Type:</strong> Interview | <strong>Total Marks:</strong> 275</p>
+                                    <div class="p-3 bg-slate-100 rounded-md">
+                                        <p>Not a test of knowledge, but of personal suitability for public service. Assesses mental alertness, judgment, integrity, and leadership.</p>
+                                        <p class="font-semibold text-blue-700 mt-2">Your DAF (Detailed Application Form) is the primary source for questions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">Eligibility Matrix for CSE 2026</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="overflow-x-auto">
+                            <table>
+                                <thead>
+                                    <tr><th>Category</th><th>Max Age</th><th>Attempts</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>General / EWS</td><td>32 years</td><td>6</td></tr>
+                                    <tr><td>OBC</td><td>35 years</td><td>9</td></tr>
+                                    <tr><td>SC / ST</td><td>37 years</td><td>Unlimited</td></tr>
+                                    <tr><td>PwBD</td><td>42 years</td><td>9 / Unlimited</td></tr>
+                                </tbody>
+                            </table>
+                             <p class="text-xs text-slate-500 mt-2">Minimum age is 21. Age is calculated as of Aug 1, 2026.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-slate-800 mb-4">Check Your Eligibility</h4>
+                            <div class="bg-slate-100 p-6 rounded-lg">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="dob" class="block text-sm font-medium text-slate-700">Date of Birth</label>
+                                        <input type="date" id="dob" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                    </div>
+                                    <div>
+                                        <label for="category" class="block text-sm font-medium text-slate-700">Category</label>
+                                        <select id="category" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                            <option value="GEN">General / EWS</option>
+                                            <option value="OBC">OBC</option>
+                                            <option value="SCST">SC / ST</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button onclick="checkEligibility()" class="mt-4 w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">Check Eligibility</button>
+                                <div id="eligibility-result" class="mt-4 text-center font-semibold"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="plan" class="page-section">
+            <div class="text-center mb-12">
+                <h2 class="font-teko text-4xl md:text-5xl font-bold text-slate-900 uppercase">The Two-Year Master Plan</h2>
+                <p class="mt-2 text-lg text-slate-600 max-w-3xl mx-auto">A structured timeline from macro phases to daily micro-plans. Use this section to guide your preparation day by day.</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8 border border-slate-200 space-y-12">
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">The Macro Plan Timeline</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                        <div id="phase-card-1" class="phase-card p-4 border-2 rounded-lg cursor-pointer transition-all duration-300" onclick="showPhaseDetails(1)">
+                            <h4 class="font-bold">Phase 1</h4>
+                            <p class="text-sm text-slate-600">Foundation Building</p>
+                            <p class="text-xs font-medium text-slate-500">Jul 2024 – Jun 2025</p>
+                        </div>
+                        <div id="phase-card-2" class="phase-card p-4 border-2 rounded-lg cursor-pointer transition-all duration-300" onclick="showPhaseDetails(2)">
+                            <h4 class="font-bold">Phase 2</h4>
+                            <p class="text-sm text-slate-600">Consolidation</p>
+                            <p class="text-xs font-medium text-slate-500">Jul 2025 – Dec 2025</p>
+                        </div>
+                        <div id="phase-card-3" class="phase-card p-4 border-2 rounded-lg cursor-pointer transition-all duration-300" onclick="showPhaseDetails(3)">
+                            <h4 class="font-bold">Phase 3</h4>
+                            <p class="text-sm text-slate-600">Prelims Intensive</p>
+                            <p class="text-xs font-medium text-slate-500">Jan 2026 – May 2026</p>
+                        </div>
+                        <div id="phase-card-4" class="phase-card p-4 border-2 rounded-lg cursor-pointer transition-all duration-300" onclick="showPhaseDetails(4)">
+                            <h4 class="font-bold">Phase 4</h4>
+                            <p class="text-sm text-slate-600">Mains Intensive</p>
+                            <p class="text-xs font-medium text-slate-500">Jun 2026 – Aug 2026</p>
+                        </div>
+                    </div>
+                    <div id="phase-details-container" class="bg-slate-100 p-6 rounded-lg min-h-[150px]"></div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">Day-Wise Action Plan (July 2025 Onwards)</h3>
+                    <div class="border-b border-slate-200">
+                        <nav class="-mb-px flex space-x-4 overflow-x-auto" aria-label="Tabs">
+                            <button onclick="showSchedule('consolidation')" class="schedule-tab tab-active whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">Phase 2: Consolidation</button>
+                            <button onclick="showSchedule('prelims')" class="schedule-tab tab-inactive whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">Phase 3: Prelims</button>
+                            <button onclick="showSchedule('mains')" class="schedule-tab tab-inactive whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">Phase 4: Mains</button>
+                        </nav>
+                    </div>
+                    <div class="mt-6">
+                        <div id="schedule-consolidation" class="schedule-content active"></div>
+                        <div id="schedule-prelims" class="schedule-content hidden"></div>
+                        <div id="schedule-mains" class="schedule-content hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources" class="page-section">
+            <div class="text-center mb-12">
+                <h2 class="font-teko text-4xl md:text-5xl font-bold text-slate-900 uppercase">Building Your Arsenal</h2>
+                <p class="mt-2 text-lg text-slate-600 max-w-3xl mx-auto">"Limited Resources, Multiple Revisions." This section provides a curated list of essential books and resources.</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8 border border-slate-200 space-y-12">
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">Recommended Booklist for General Studies</h3>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>Subject</th><th>NCERTs (Class-wise)</th><th>Advanced Reference Book(s)</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Indian Polity</td><td>Indian Constitution at Work (XI)</td><td>Indian Polity by M. Laxmikanth</td></tr>
+                                <tr><td>Modern History</td><td>Our Pasts - III (VIII), Old NCERT by Bipin Chandra</td><td>A Brief History of Modern India by Spectrum</td></tr>
+                                <tr><td>Art & Culture</td><td>An Introduction to Indian Art (XI)</td><td>Indian Art and Culture by Nitin Singhania</td></tr>
+                                <tr><td>Geography</td><td>XI (Both), XII (Both)</td><td>Certificate Physical and Human Geography by G.C. Leong</td></tr>
+                                <tr><td>Economy</td><td>Indian Economic Development (XI), Macroeconomics (XII)</td><td>Indian Economy by Nitin Singhania or Ramesh Singh</td></tr>
+                                <tr><td>Environment</td><td>NCERT Biology (XII - relevant chapters)</td><td>Environment by Shankar IAS Academy</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">Mastering Current Affairs</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="p-4 bg-slate-100 rounded-lg">
+                            <h4 class="font-bold">Daily Newspaper</h4>
+                            <p class="text-sm mt-1">Read The Hindu or The Indian Express daily. Focus on syllabus-relevant news and editorials.</p>
+                        </div>
+                        <div class="p-4 bg-slate-100 rounded-lg">
+                            <h4 class="font-bold">Monthly Consolidation</h4>
+                            <p class="text-sm mt-1">Supplement with one monthly magazine (e.g., VisionIAS) and government publications like Yojana & Kurukshetra.</p>
+                        </div>
+                        <div class="p-4 bg-slate-100 rounded-lg">
+                            <h4 class="font-bold">Official Sources</h4>
+                            <p class="text-sm mt-1">Regularly check PIB for government announcements and PRS for legislative updates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategy" class="page-section">
+            <div class="text-center mb-12">
+                <h2 class="font-teko text-4xl md:text-5xl font-bold text-slate-900 uppercase">The Core Execution Engine</h2>
+                <p class="mt-2 text-lg text-slate-600 max-w-3xl mx-auto">Knowledge is not enough. Master the skills of choosing an optional, making notes, revising, and writing answers.</p>
+            </div>
+             <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8 border border-slate-200">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Choosing Your Optional Subject</h3>
+                        <p class="text-sm text-slate-600 mb-4">The optional subject (500 marks) is a rank-decider. This chart shows success rates for popular subjects. Click a bar to see a strategic analysis. Your choice should balance interest, scoring potential, and resource availability.</p>
+                        <div class="chart-container">
+                            <canvas id="optional-chart"></canvas>
+                        </div>
+                        <div id="optional-details" class="mt-4 p-4 bg-slate-100 rounded-lg text-sm min-h-[100px]">
+                            <h4 id="optional-title" class="font-bold text-slate-800">Select a subject</h4>
+                            <p id="optional-pros-cons" class="text-slate-600 mt-1">Click a bar on the chart to see its strategic considerations.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Mastering the How-To</h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-100 rounded-lg">
+                                <h4 class="font-semibold text-slate-800">Note-Making</h4>
+                                <p class="text-sm text-slate-600 mt-1">Make notes on your 2nd or 3rd reading. Use your own words, bullet points, and add value (data, diagrams). Use digital tools or A4 sheets for easy updates.</p>
+                            </div>
+                            <div class="p-4 bg-slate-100 rounded-lg">
+                                <h4 class="font-semibold text-slate-800">Revision Science</h4>
+                                <p class="text-sm text-slate-600 mt-1">Use Spaced Repetition: Revise daily, weekly, and monthly. Practice Active Recall: Close the book and try to remember concepts. This is more effective than passive re-reading.</p>
+                            </div>
+                             <div class="p-4 bg-slate-100 rounded-lg">
+                                <h4 class="font-semibold text-slate-800">Answer Writing</h4>
+                                <p class="text-sm text-slate-600 mt-1">Follow the IBC (Introduction-Body-Conclusion) structure. Address all parts of the question. Use subheadings, bullet points, and enrich answers with data, examples, and diagrams.</p>
+                            </div>
+                            <div class="p-4 bg-slate-100 rounded-lg">
+                                <h4 class="font-semibold text-slate-800">Mock Tests</h4>
+                                <p class="text-sm text-slate-600 mt-1">The goal is feedback, not just scores. Simulate exam conditions. Spend more time analyzing the test than writing it. Maintain an "error log" to track and rectify recurring mistakes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mindset" class="page-section">
+            <div class="text-center mb-12">
+                <h2 class="font-teko text-4xl md:text-5xl font-bold text-slate-900 uppercase">Cultivating the Topper's Mindset</h2>
+                <p class="mt-2 text-lg text-slate-600 max-w-3xl mx-auto">This journey is a marathon, not a sprint. It tests character and resilience as much as intellect.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 text-center">
+                    <h3 class="font-semibold text-lg text-slate-800 mb-2">Discipline & Consistency</h3>
+                    <p class="text-slate-600 text-sm">A sustainable 8-10 hour daily schedule is more effective than sporadic 15-hour bursts. Consistency is your greatest asset.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 text-center">
+                    <h3 class="font-semibold text-lg text-slate-800 mb-2">The Holy Trinity</h3>
+                    <p class="text-slate-600 text-sm">Your rank is often decided by three areas: Essay, Ethics (GS-IV), and your Optional Subject. Give them disproportionate importance.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 text-center">
+                    <h3 class="font-semibold text-lg text-slate-800 mb-2">Health & Resilience</h3>
+                    <p class="text-slate-600 text-sm">Prioritize 7-8 hours of sleep, nutrition, and daily exercise. Manage stress through hobbies and breaks. A healthy mind resides in a healthy body.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 text-center">
+                    <h3 class="font-semibold text-lg text-slate-800 mb-2">Syllabus & PYQs</h3>
+                    <p class="text-slate-600 text-sm">Let the syllabus and Previous Year Questions be your guiding stars. They define the scope and demand of the examination.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 text-center">
+                    <h3 class="font-semibold text-lg text-slate-800 mb-2">Learn from Failure</h3>
+                    <p class="text-slate-600 text-sm">Many toppers do not succeed on their first attempt. See setbacks as learning opportunities and maintain self-belief.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 text-center">
+                    <h3 class="font-semibold text-lg text-slate-800 mb-2">DAF is Your Syllabus</h3>
+                    <p class="text-slate-600 text-sm">For the interview, your Detailed Application Form is the primary source of questions. Prepare every entry thoroughly.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-slate-800 text-slate-400 mt-16">
+        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>Project IAS 2026: The Complete Strategy Website</p>
+            <p class="mt-1">A comprehensive tool to guide your two-year preparation journey. Best of luck.</p>
+        </div>
+    </footer>
+
+<script>
+// --- CORE NAVIGATION ---
+function showPage(pageId, navElement) {
+    document.querySelectorAll('.page-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    document.getElementById(pageId).classList.add('active');
+
+    document.querySelectorAll('#main-nav a').forEach(link => {
+        link.classList.remove('nav-link-active', 'text-slate-600');
+        link.classList.add('text-slate-600');
+    });
+    navElement.classList.add('nav-link-active');
+    navElement.classList.remove('text-slate-600');
+    window.scrollTo(0, 0);
+}
+
+
+// --- COUNTDOWN TIMER ---
+const prelimsDate = new Date('2026-05-24T09:30:00');
+const mainsDate = new Date('2026-08-21T09:00:00');
+
+function updateCountdowns() {
+    const now = new Date();
+    const prelimsCountdownElem = document.getElementById('prelims-countdown');
+    const mainsCountdownElem = document.getElementById('mains-countdown');
+
+    if (prelimsCountdownElem) {
+        const prelimsDiff = prelimsDate - now;
+        const prelimsDays = Math.floor(prelimsDiff / (1000 * 60 * 60 * 24));
+        const prelimsHours = Math.floor((prelimsDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const prelimsMinutes = Math.floor((prelimsDiff % (1000 * 60 * 60)) / (1000 * 60));
+        const prelimsSeconds = Math.floor((prelimsDiff % (1000 * 60)) / 1000);
+        prelimsCountdownElem.textContent = `${prelimsDays}d ${prelimsHours}h ${prelimsMinutes}m ${prelimsSeconds}s`;
+    }
+
+    if (mainsCountdownElem) {
+        const mainsDiff = mainsDate - now;
+        const mainsDays = Math.floor(mainsDiff / (1000 * 60 * 60 * 24));
+        const mainsHours = Math.floor((mainsDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const mainsMinutes = Math.floor((mainsDiff % (1000 * 60 * 60)) / (1000 * 60));
+        const mainsSeconds = Math.floor((mainsDiff % (1000 * 60)) / 1000);
+        mainsCountdownElem.textContent = `${mainsDays}d ${mainsHours}h ${mainsMinutes}m ${mainsSeconds}s`;
+    }
+}
+
+// --- EXAM ANATOMY ---
+function toggleStageDetails(stage) {
+    const detailsDiv = document.getElementById(`details-${stage}`);
+    const stageGate = document.getElementById(`stage-${stage}`);
+    const isHidden = detailsDiv.classList.contains('hidden');
+
+    document.querySelectorAll('.stage-details').forEach(d => d.classList.add('hidden'));
+    document.querySelectorAll('.stage-gate').forEach(g => g.classList.remove('bg-blue-50', 'border-blue-500'));
+    
+    if (isHidden) {
+        detailsDiv.classList.remove('hidden');
+        stageGate.classList.add('bg-blue-50', 'border-blue-500');
+    }
+}
+
+function checkEligibility() {
+    const dobInput = document.getElementById('dob').value;
+    const category = document.getElementById('category').value;
+    const resultDiv = document.getElementById('eligibility-result');
+
+    if (!dobInput) {
+        resultDiv.innerHTML = `<span class="text-red-600">Please enter your date of birth.</span>`;
+        return;
+    }
+
+    const dob = new Date(dobInput);
+    const cutoffDate = new Date('2026-08-01');
+    const age = Math.floor((cutoffDate - dob) / (1000 * 60 * 60 * 24 * 365.25));
+
+    let maxAge, attempts;
+    switch (category) {
+        case 'OBC': maxAge = 35; attempts = 9; break;
+        case 'SCST': maxAge = 37; attempts = 'Unlimited'; break;
+        default: maxAge = 32; attempts = 6;
+    }
+
+    if (age >= 21 && age < maxAge) {
+        resultDiv.innerHTML = `<span class="text-green-600">You are eligible! Age: ${age}. Attempts: ${attempts}.</span>`;
+    } else {
+        resultDiv.innerHTML = `<span class="text-red-600">Not eligible. Age on Aug 1, 2026 would be ${age}. Required: 21-${maxAge-1}.</span>`;
+    }
+}
+
+// --- MASTER PLAN ---
+const phaseDetails = {
+    1: { title: "Phase 1: Foundation Building (Jul 2024 – Jun 2025)", content: "This 12-month period is for building a solid conceptual foundation via NCERTs, newspaper reading, and starting your optional subject." },
+    2: { title: "Phase 2: Consolidation & Mains Focus (Jul 2025 – Dec 2025)", content: "This 6-month phase is for studying advanced books, creating integrated notes, and initiating daily answer writing practice." },
+    3: { title: "Phase 3: Prelims-Intensive Phase (Jan 2026 – May 2026)", content: "This 5-month period is exclusively for Prelims-oriented preparation: intensive revision, mock tests, and mastering MCQs." },
+    4: { title: "Phase 4: Mains-Intensive Phase (Jun 2026 – Aug 2026)", content: "The crucial 90-100 day window between Prelims and Mains. Focus on intensive answer writing, optional subject mastery, and GS Mains topics." }
+};
+
+function showPhaseDetails(phaseNumber) {
+    document.querySelectorAll('.phase-card').forEach(card => card.classList.remove('phase-card-active'));
+    document.getElementById(`phase-card-${phaseNumber}`).classList.add('phase-card-active');
+    const details = phaseDetails[phaseNumber];
+    document.getElementById('phase-details-container').innerHTML = `
+        <h4 class="font-bold text-lg text-slate-800">${details.title}</h4>
+        <p class="mt-2 text-slate-600">${details.content}</p>
+    `;
+}
+
+const scheduleData = {
+    consolidation: [
+        { month: 'July (Last Week)', focus: 'Indian Polity (GS-II)', tasks: 'Settle into the daily routine. Start reading M. Laxmikanth. Continue Optional Subject study. Write 1-2 answers daily.' },
+        { month: 'August', focus: 'Indian Polity (GS-II)', tasks: 'Finish M. Laxmikanth. Continue Optional Subject. Increase answer writing to 2-3 questions daily. Weekly revision every Sunday.' },
+        { month: 'September', focus: 'Modern History (GS-I)', tasks: "Read Spectrum's 'A Brief History of Modern India'. Continue Optional Subject. Daily answer writing. Start weekly Essay practice." },
+        { month: 'October', focus: 'Indian Economy (GS-III)', tasks: "Read a standard reference book. <strong>Target: Complete Optional Subject syllabus by month-end.</strong>" },
+        { month: 'November', focus: 'Geography (GS-I)', tasks: 'Cover Physical & Indian Geography from NCERTs & G.C. Leong. <strong>Start first revision of Optional Subject.</strong>' },
+        { month: 'December', focus: 'Environment & Ethics', tasks: 'Cover Environment from a standard source. Begin GS-IV (Ethics), focusing on theory and case studies. Continue Optional revision.' },
+    ],
+    prelims: [
+        { month: 'January', focus: 'Revision Round 1 (Polity & History)', tasks: 'Shift to Prelims-oriented revision. Solve subject-wise MCQs daily. <strong>Start dedicated daily CSAT practice (1 hour).</strong> Take 1 Full-Length Test (FLT) every weekend and analyze it thoroughly.' },
+        { month: 'February', focus: 'Revision Round 1 (Economy & Geography)', tasks: 'Continue intensive revision of core subjects. Solve MCQs. Daily CSAT practice. 1 FLT every weekend with deep analysis.' },
+        { month: 'March', focus: 'Revision Round 2 + Current Affairs', tasks: 'Start revising from consolidated current affairs compilations. Integrate dynamic content with static knowledge. <strong>Increase mock test frequency to 2 FLTs per week.</strong>' },
+        { month: 'April', focus: 'Revision Round 2 (cont.) + Mock Tests', tasks: 'Continue second revision of all subjects. Focus on weak areas identified from mock tests. Maintain an "error log". 2 FLTs per week.' },
+        { month: 'May (until 24th)', focus: 'Final Revisions', tasks: '<strong>Stop taking mock tests 7-10 days before the exam.</strong> Focus on rapid revision of short notes, current affairs, and your error log. Revise CSAT formulas. Stay calm and ensure good health.' },
+    ],
+    mains: [
+        { period: 'May 25 - 31', focus: 'Rest & Strategize', tasks: 'Take a short break. Analyze your Prelims performance and create a detailed 90-day plan for Mains.' },
+        { period: 'June', focus: 'Optional Subject & Ethics (GS-IV)', tasks: 'Dedicate the month to mastering your Optional and Ethics. Revise Optional Paper 1 & 2 thoroughly. Practice daily answer writing for both. <strong>Write 1 full-length Optional and 1 Ethics paper every week.</strong> Practice one Essay weekly.' },
+        { period: 'July', focus: 'GS-II & GS-III', tasks: 'Revise GS-II (Polity, Governance, IR) and GS-III (Economy, S&T, Security). Integrate current affairs extensively. Continue daily answer writing. <strong>Write 1 full-length GS-II and 1 GS-III paper every week.</strong> Continue Optional and Essay practice.' },
+        { period: 'Aug 1 - 14', focus: 'GS-I & Full Revision', tasks: 'Cover GS-I (History, Geography, Society). Begin the final, integrated revision of all subjects. <strong>Attempt full-length mock tests for all 9 papers to simulate the exam week.</strong>' },
+        { period: 'Aug 15 - 20', focus: 'Final Consolidation', tasks: 'Taper down answer writing. Focus on revising short notes, data, quotes, diagrams, and key statistics. Prioritize sleep and mental calmness.' },
+    ]
+};
+
+function generateScheduleHTML(data) {
+    return `<div class="space-y-4">${data.map(item => `
+        <div class="p-4 bg-white border rounded-lg shadow-sm">
+            <h5 class="font-semibold text-slate-800">${item.month || item.period}: <span class="font-normal">${item.focus}</span></h5>
+            <p class="text-sm text-slate-600 mt-1">${item.tasks}</p>
+        </div>
+    `).join('')}</div>`;
+}
+
+function showSchedule(scheduleName) {
+    document.querySelectorAll('.schedule-content').forEach(section => section.classList.add('hidden'));
+    document.getElementById(`schedule-${scheduleName}`).classList.remove('hidden');
+
+    document.querySelectorAll('.schedule-tab').forEach(tab => {
+        tab.classList.remove('tab-active');
+        tab.classList.add('tab-inactive');
+    });
+    const button = document.querySelector(`button[onclick="showSchedule('${scheduleName}')"]`);
+    button.classList.add('tab-active');
+    button.classList.remove('tab-inactive');
+}
+
+
+// --- STRATEGY & SKILLS (CHART) ---
+const optionalData = {
+    labels: ['Commerce', 'Medical Sci', 'Law', 'PSIR', 'Public Admn', 'Sociology', 'Anthropology'],
+    datasets: [{
+        label: 'Success Rate (2021) %',
+        data: [15.0, 12.2, 11.7, 8.9, 8.6, 8.5, 7.8],
+        backgroundColor: 'rgba(37, 99, 235, 0.6)',
+        borderColor: 'rgba(37, 99, 235, 1)',
+        borderWidth: 1
+    }]
+};
+const optionalDetailsData = [
+    { title: 'Commerce & Accountancy', text: '<strong>Pros:</strong> High scoring. <strong>Cons:</strong> Niche, only for those with a commerce background.' },
+    { title: 'Medical Science', text: '<strong>Pros:</strong> Very high scoring, static syllabus. <strong>Cons:</strong> Vast syllabus, only for medical graduates.' },
+    { title: 'Law', text: '<strong>Pros:</strong> Scoring, good for law graduates. <strong>Cons:</strong> Can be technical; limited overlap for non-law students.' },
+    { title: 'PSIR', text: '<strong>Pros:</strong> High overlap with GS-II, Essay, Interview; dynamic. <strong>Cons:</strong> Requires constant current affairs updates.' },
+    { title: 'Public Administration', text: '<strong>Pros:</strong> Overlap with GS-II. <strong>Cons:</strong> Perceived unpredictability in scoring in recent years.' },
+    { title: 'Sociology', text: '<strong>Pros:</strong> High overlap with GS-I, Essay, Ethics; easy to grasp. <strong>Cons:</strong> High competition, requires unique examples.' },
+    { title: 'Anthropology', text: '<strong>Pros:</strong> Relatively concise syllabus, scoring, good for science background. <strong>Cons:</strong> Requires diagram practice.' },
+];
+
+function renderOptionalChart() {
+    const ctx = document.getElementById('optional-chart');
+    if (ctx) {
+       new Chart(ctx.getContext('2d'), {
+            type: 'bar',
+            data: optionalData,
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, title: { display: true, text: 'Optional Subject Success Rates (2021)' } },
+                scales: { x: { beginAtZero: true, title: { display: true, text: 'Success Rate (%)' } } },
+                onClick: (event, elements) => {
+                    if (elements.length > 0) {
+                        const index = elements[0].index;
+                        const details = optionalDetailsData[index];
+                        document.getElementById('optional-title').textContent = details.title;
+                        document.getElementById('optional-pros-cons').innerHTML = details.text;
+                    }
+                }
+            }
+        });
+    }
+}
+
+
+// --- INITIALIZATION ---
+window.onload = function() {
+    // Initial content setup
+    showPage('home', document.querySelector('#main-nav a'));
+    
+    // Countdowns
+    setInterval(updateCountdowns, 1000);
+    updateCountdowns();
+
+    // Master Plan section
+    showPhaseDetails(1);
+    document.getElementById('schedule-consolidation').innerHTML = generateScheduleHTML(scheduleData.consolidation);
+    document.getElementById('schedule-prelims').innerHTML = generateScheduleHTML(scheduleData.prelims);
+    document.getElementById('schedule-mains').innerHTML = generateScheduleHTML(scheduleData.mains);
+    showSchedule('consolidation');
+
+    // Strategy section
+    renderOptionalChart();
+};
+
+</script>
+</body>
+</html>
